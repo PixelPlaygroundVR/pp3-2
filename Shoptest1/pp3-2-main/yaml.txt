@@ -1,0 +1,169 @@
+name: Update Deals
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch:
+jobs:
+  update-deals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install Dependencies
+        run: npm install rss-parser axios cheerio
+      - name: Scrape Deals
+        run: |
+          echo "const Parser = require('rss-parser');" > scrape.js
+          echo "const axios = require('axios');" >> scrape.js
+          echo "const cheerio = require('cheerio');" >> scrape.js
+          echo "const fs = require('fs');" >> scrape.js
+          echo "" >> scrape.js
+          echo "// Function to generate a random expiration date within the next 1-30 days" >> scrape.js
+          echo "function getRandomExpirationDate() {" >> scrape.js
+          echo "  const now = new Date();" >> scrape.js
+          echo "  const daysToAdd = Math.floor(Math.random() * 30) + 1;" >> scrape.js
+          echo "  now.setDate(now.getDate() + daysToAdd);" >> scrape.js
+          echo "  return now.toISOString().split('T')[0];" >> scrape.js
+          echo "}" >> scrape.js
+          echo "" >> scrape.js
+          echo "// Function to extract price from text" >> scrape.js
+          echo "function extractPrice(text) {" >> scrape.js
+          echo "  const priceMatch = text.match(/\\$([0-9]+(\.[0-9]+)?)/g);" >> scrape.js
+          echo "  if (priceMatch && priceMatch.length >= 2) {" >> scrape.js
+          echo "    return {" >> scrape.js
+          echo "      originalPrice: parseFloat(priceMatch[0].replace('$', ''))," >> scrape.js
+          echo "      discountedPrice: parseFloat(priceMatch[1].replace('$', ''))" >> scrape.js
+          echo "    };" >> scrape.js
+          echo "  } else if (priceMatch && priceMatch.length === 1) {" >> scrape.js
+          echo "    const price = parseFloat(priceMatch[0].replace('$', ''));" >> scrape.js
+          echo "    return {" >> scrape.js
+          echo "      originalPrice: Math.round(price * 1.3)," >> scrape.js
+          echo "      discountedPrice: price" >> scrape.js
+          echo "    };" >> scrape.js
+          echo "  } else {" >> scrape.js
+          echo "    return {" >> scrape.js
+          echo "      originalPrice: Math.floor(Math.random() * 1000) + 100," >> scrape.js
+          echo "      discountedPrice: Math.floor(Math.random() * 500) + 50" >> scrape.js
+          echo "    };" >> scrape.js
+          echo "  }" >> scrape.js
+          echo "}" >> scrape.js
+          echo "" >> scrape.js
+          echo "// Function to determine category based on title" >> scrape.js
+          echo "function determineCategory(title) {" >> scrape.js
+          echo "  const title_lower = title.toLowerCase();" >> scrape.js
+          echo "  if (title_lower.includes('laptop') || title_lower.includes('macbook') || title_lower.includes('notebook')) {" >> scrape.js
+          echo "    return 'Laptops';" >> scrape.js
+          echo "  } else if (title_lower.includes('phone') || title_lower.includes('iphone') || title_lower.includes('galaxy') || title_lower.includes('pixel') || title_lower.includes('earbuds') || title_lower.includes('headphones')) {" >> scrape.js
+          echo "    return 'Phones';" >> scrape.js
+          echo "  } else if (title_lower.includes('gpu') || title_lower.includes('graphics') || title_lower.includes('rtx') || title_lower.includes('radeon')) {" >> scrape.js
+          echo "    return 'GPUs';" >> scrape.js
+          echo "  } else if (title_lower.includes('ssd') || title_lower.includes('storage') || title_lower.includes('drive') || title_lower.includes('nvme') || title_lower.includes('tb')) {" >> scrape.js
+          echo "    return 'Storage';" >> scrape.js
+          echo "  } else if (title_lower.includes('keyboard') || title_lower.includes('mouse') || title_lower.includes('monitor') || title_lower.includes('headset')) {" >> scrape.js
+          echo "    return 'Peripherals';" >> scrape.js
+          echo "  } else if (title_lower.includes('quantum') || title_lower.includes('ai') || title_lower.includes('neural') || Math.random() < 0.05) {" >> scrape.js
+          echo "    return 'Alien Tech';" >> scrape.js
+          echo "  } else {" >> scrape.js
+          echo "    const categories = ['Laptops', 'Phones', 'GPUs', 'Storage', 'Peripherals'];" >> scrape.js
+          echo "    return categories[Math.floor(Math.random() * categories.length)];" >> scrape.js
+          echo "  }" >> scrape.js
+          echo "}" >> scrape.js
+          echo "" >> scrape.js
+          echo "async function scrapeDeals() {" >> scrape.js
+          echo "  const deals = [];" >> scrape.js
+          echo "  const today = new Date().toISOString().split('T')[0];" >> scrape.js
+          echo "" >> scrape.js
+          echo "  // Scrape from Slickdeals RSS" >> scrape.js
+          echo "  try {" >> scrape.js
+          echo "    const parser = new Parser();" >> scrape.js
+          echo "    const feed = await parser.parseURL('https://slickdeals.net/newsearch.php?mode=frontpage&searcharea=deals&searchin=first&rss=1');" >> scrape.js
+          echo "" >> scrape.js
+          echo "    feed.items.forEach((item, index) => {" >> scrape.js
+          echo "      const prices = extractPrice(item.title + ' ' + (item.contentSnippet || ''));" >> scrape.js
+          echo "      const category = determineCategory(item.title);" >> scrape.js
+          echo "" >> scrape.js
+          echo "      deals.push({" >> scrape.js
+          echo "        id: index + 1," >> scrape.js
+          echo "        name: item.title.replace(/\\$[0-9]+(\.[0-9]+)?/g, '').trim()," >> scrape.js
+          echo "        category: category," >> scrape.js
+          echo "        originalPrice: prices.originalPrice," >> scrape.js
+          echo "        discountedPrice: prices.discountedPrice," >> scrape.js
+          echo "        expiration: getRandomExpirationDate()," >> scrape.js
+          echo "        link: item.link," >> scrape.js
+          echo "        dateAdded: today" >> scrape.js
+          echo "      });" >> scrape.js
+          echo "    });" >> scrape.js
+          echo "  } catch (error) {" >> scrape.js
+          echo "    console.error('Error scraping Slickdeals:', error);" >> scrape.js
+          echo "  }" >> scrape.js
+          echo "" >> scrape.js
+          echo "  // Add some fake Alien Tech deals" >> scrape.js
+          echo "  const alienTechNames = [" >> scrape.js
+          echo "    'Quantum Neural Processor'," >> scrape.js
+          echo "    'Teleportation Pad'," >> scrape.js
+          echo "    'Holographic Display Unit'," >> scrape.js
+          echo "    'Anti-Gravity Generator'," >> scrape.js
+          echo "    'Consciousness Transfer Device'" >> scrape.js
+          echo "  ];" >> scrape.js
+          echo "" >> scrape.js
+          echo "  for (let i = 0; i < 3; i++) {" >> scrape.js
+          echo "    const name = alienTechNames[Math.floor(Math.random() * alienTechNames.length)];" >> scrape.js
+          echo "    const originalPrice = Math.floor(Math.random() * 9000) + 1000;" >> scrape.js
+          echo "    const discountedPrice = Math.floor(originalPrice * (Math.random() * 0.4 + 0.3));" >> scrape.js
+          echo "" >> scrape.js
+          echo "    deals.push({" >> scrape.js
+          echo "      id: deals.length + 1," >> scrape.js
+          echo "      name: name," >> scrape.js
+          echo "      category: 'Alien Tech'," >> scrape.js
+          echo "      originalPrice: originalPrice," >> scrape.js
+          echo "      discountedPrice: discountedPrice," >> scrape.js
+          echo "      expiration: getRandomExpirationDate()," >> scrape.js
+          echo "      link: 'https://example.com'," >> scrape.js
+          echo "      dateAdded: today" >> scrape.js
+          echo "    });" >> scrape.js
+          echo "  }" >> scrape.js
+          echo "" >> scrape.js
+          echo "  // If we couldn't get enough deals, add some fallback deals" >> scrape.js
+          echo "  if (deals.length < 10) {" >> scrape.js
+          echo "    const fallbackDeals = [" >> scrape.js
+          echo "      { name: 'Laptop X', category: 'Laptops', originalPrice: 1000, discountedPrice: 700 }," >> scrape.js
+          echo "      { name: 'GPU 3080', category: 'GPUs', originalPrice: 800, discountedPrice: 600 }," >> scrape.js
+          echo "      { name: 'Phone Z', category: 'Phones', originalPrice: 500, discountedPrice: 400 }," >> scrape.js
+          echo "      { name: '1TB SSD', category: 'Storage', originalPrice: 150, discountedPrice: 70 }," >> scrape.js
+          echo "      { name: 'Mechanical Keyboard', category: 'Peripherals', originalPrice: 200, discountedPrice: 120 }" >> scrape.js
+          echo "    ];" >> scrape.js
+          echo "" >> scrape.js
+          echo "    fallbackDeals.forEach((deal, index) => {" >> scrape.js
+          echo "      deals.push({" >> scrape.js
+          echo "        id: deals.length + 1," >> scrape.js
+          echo "        name: deal.name," >> scrape.js
+          echo "        category: deal.category," >> scrape.js
+          echo "        originalPrice: deal.originalPrice," >> scrape.js
+          echo "        discountedPrice: deal.discountedPrice," >> scrape.js
+          echo "        expiration: getRandomExpirationDate()," >> scrape.js
+          echo "        link: 'https://example.com'," >> scrape.js
+          echo "        dateAdded: today" >> scrape.js
+          echo "      });" >> scrape.js
+          echo "    });" >> scrape.js
+          echo "  }" >> scrape.js
+          echo "" >> scrape.js
+          echo "  // Limit to 20 deals and write to file" >> scrape.js
+          echo "  fs.writeFileSync('deals.json', JSON.stringify(deals.slice(0, 20), null, 2));" >> scrape.js
+          echo "  console.log(`Successfully scraped ${deals.length} deals, saved 20 to deals.json`);" >> scrape.js
+          echo "}" >> scrape.js
+          echo "" >> scrape.js
+          echo "scrapeDeals().catch(error => {" >> scrape.js
+          echo "  console.error('Error in scraping process:', error);" >> scrape.js
+          echo "  process.exit(1);" >> scrape.js
+          echo "});" >> scrape.js
+          node scrape.js
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add deals.json
+          git commit -m "Update deals.json with latest scraped data" || echo "No changes to commit"
+          git push

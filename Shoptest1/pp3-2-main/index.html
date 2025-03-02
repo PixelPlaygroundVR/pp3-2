@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Deal Scraper - The Fucking Future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="starry-bg"></div>
+    <div class="ufo-container"></div>
+    
+    <header>
+        <h1>Galactic Deal Scraper</h1>
+        <p>The Fucking Future of Deal Hunting</p>
+        <nav>
+            <ul>
+                <button id="dealNav" class="nav-btn active">Deals</button>
+                <button id="forumNav" class="nav-btn">Galactic Hub</button>
+                <button id="volunteerNav" class="nav-btn">Join Resistance</button>
+                <button id="impactNav" class="nav-btn">Impact</button>
+                <button id="zorblaxBtn" class="nav-btn">Ask Zorblax</button>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Main Deal Section -->
+        <section id="dealSection" class="active-section">
+            <!-- Search and Filters -->
+            <section class="controls">
+                <input type="text" id="searchBar" placeholder="Search deals (e.g., SSD)">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Laptops">Laptops</option>
+                    <option value="Phones">Phones</option>
+                    <option value="GPUs">GPUs</option>
+                    <option value="Storage">Storage</option>
+                    <option value="Peripherals">Peripherals</option>
+                    <option value="Alien Tech">Alien Tech</option>
+                </select>
+                <select id="dealTypeFilter">
+                    <option value="">All Deals</option>
+                    <option value="50">Over 50% Off</option>
+                    <option value="30">Over 30% Off</option>
+                    <option value="flash">Flash Deals</option>
+                </select>
+                <select id="sortFilter">
+                    <option value="price">Price: Low to High</option>
+                    <option value="discount">Discount: High to Low</option>
+                    <option value="expiration">Expiring Soon</option>
+                    <option value="newest">Newest Deals</option>
+                </select>
+                <button id="cosmicScan" class="pulse-btn">Cosmic Scan</button>
+            </section>
+
+            <!-- Deal Catalog -->
+            <section id="dealCatalog" class="deal-grid" aria-live="polite"></section>
+
+            <!-- Checkout and Donate -->
+            <section id="checkout" class="hidden">
+                <h2>Checkout, You Cheap Bastard!</h2>
+                <p id="savingsText">You've saved $0 so far.</p>
+                <div class="donate-section">
+                    <p>Toss us some creds to keep this galaxy spinning!</p>
+                    <div class="donate-options">
+                        <button class="donate-btn" data-amount="1">$1</button>
+                        <button class="donate-btn" data-amount="5">$5</button>
+                        <button class="donate-btn" data-amount="10">$10</button>
+                        <div class="custom-amount">
+                            <input type="number" id="customAmount" min="1" placeholder="Custom $">
+                            <button id="customDonate">Donate</button>
+                        </div>
+                        <button id="roundUp" class="special-btn">Round Up My Savings</button>
+                    </div>
+                    <div class="payment-methods">
+                        <p>Donate via:</p>
+                        <button id="stripeBtn" class="payment-btn">Stripe</button>
+                        <button id="paypalBtn" class="payment-btn">PayPal</button>
+                        <button id="cryptoBtn" class="payment-btn">Crypto</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Forum Section -->
+        <section id="forumSection" class="section-container hidden">
+            <h2>Galactic Deal Hub</h2>
+            <div class="forum-container">
+                <div class="forum-categories">
+                    <div class="forum-category">
+                        <h3>Deal Discussion</h3>
+                        <ul id="dealThreads" class="thread-list">
+                            <li class="thread">
+                                <span class="thread-title">Found an insane GPU deal!</span>
+                                <span class="thread-author">CosmicHunter</span>
+                                <span class="thread-date">2 hours ago</span>
+                            </li>
+                            <li class="thread">
+                                <span class="thread-title">Are these SSDs worth it?</span>
+                                <span class="thread-author">DealJedi</span>
+                                <span class="thread-date">5 hours ago</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="forum-category">
+                        <h3>Tech Talk</h3>
+                        <ul id="techThreads" class="thread-list">
+                            <li class="thread">
+                                <span class="thread-title">Next-gen console rumors</span>
+                                <span class="thread-author">GalacticGamer</span>
+                                <span class="thread-date">1 day ago</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="new-thread">
+                    <h3>Start a New Thread</h3>
+                    <input type="text" id="threadTitle" placeholder="Thread Title">
+                    <textarea id="threadContent" placeholder="What's on your mind, space traveler?"></textarea>
+                    <button id="postThread">Post to Galaxy</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteer Section -->
+        <section id="volunteerSection" class="section-container hidden">
+            <h2>Join the Resistance</h2>
+            <p>Help us build the best fucking deal app in the universe!</p>
+            <div class="volunteer-options">
+                <div class="volunteer-card">
+                    <h3>Code Warrior</h3>
+                    <p>Contribute to our GitHub repo with your coding skills.</p>
+                    <button class="volunteer-btn" data-type="coder">I Can Code</button>
+                </div>
+                <div class="volunteer-card">
+                    <h3>Deal Hunter</h3>
+                    <p>Find and submit the hottest tech deals across the cosmos.</p>
+                    <button class="volunteer-btn" data-type="hunter">I Can Hunt</button>
+                </div>
+                <div class="volunteer-card">
+                    <h3>UI/UX Designer</h3>
+                    <p>Make our galactic interface even more mind-blowing.</p>
+                    <button class="volunteer-btn" data-type="designer">I Can Design</button>
+                </div>
+            </div>
+            <div id="volunteerForm" class="hidden">
+                <h3>Join Our Fleet</h3>
+                <input type="text" id="volunteerName" placeholder="Your Name">
+                <input type="email" id="volunteerEmail" placeholder="Your Email">
+                <textarea id="volunteerSkills" placeholder="Tell us about your skills"></textarea>
+                <button id="submitVolunteer">Submit Application</button>
+            </div>
+        </section>
+
+        <!-- Impact Dashboard -->
+        <section id="impactSection" class="section-container hidden">
+            <h2>Impact Dashboard</h2>
+            <div class="impact-stats">
+                <div class="stat-card">
+                    <h3>Total Donations</h3>
+                    <p id="totalDonations">$1,337</p>
+                </div>
+                <div class="stat-card">
+                    <h3>User Savings</h3>
+                    <p id="totalSavings">$42,069</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <p id="activeUsers">9,001</p>
+                </div>
+            </div>
+            <div class="impact-progress">
+                <h3>Funding Goals</h3>
+                <div class="goal">
+                    <p>Server Upgrade: $500</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 80%;"></div>
+                    </div>
+                    <p>80% Complete</p>
+                </div>
+                <div class="goal">
+                    <p>Zorblax AI Upgrade: $1,000</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 45%;"></div>
+                    </div>
+                    <p>45% Complete</p>
+                </div>
+            </div>
+            <div class="donor-wall">
+                <h3>Galactic Legends</h3>
+                <div class="donor-list" id="donorList">
+                    <div class="donor">
+                        <span class="donor-name">SpaceX_Fan</span>
+                        <span class="donor-amount">$50</span>
+                        <span class="donor-badge legend">Galactic Legend</span>
+                    </div>
+                    <div class="donor">
+                        <span class="donor-name">TechHunter42</span>
+                        <span class="donor-amount">$20</span>
+                        <span class="donor-badge star">Star Donor</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Zorblax Chatbot -->
+    <aside id="zorblaxChat" class="hidden">
+        <div class="chat-header">
+            <h3>Zorblax, Your Deal Overlord</h3>
+            <button id="closeChat">X</button>
+        </div>
+        <div id="chatOutput" class="chat-messages">
+            <div class="chat-message bot">
+                <p>Greetings, primitive human. I am Zorblax, your guide to the cosmic deals. What tech do you seek?</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Ask me shit...">
+            <button id="sendChat">Send</button>
+        </div>
+    </aside>
+
+    <!-- Galactic Map Modal -->
+    <div id="galacticMapModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Galactic Map</h2>
+            <div class="galaxy-map">
+                <svg viewBox="0 0 800 600" id="galaxySvg">
+                    <!-- SVG map will be generated by JavaScript -->
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div id="newsletterModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Subscribe to Deal Warp</h2>
+            <p>Get the hottest deals beamed directly to your primitive email device!</p>
+            <input type="email" id="newsletterEmail" placeholder="Your Email">
+            <button id="subscribeBtn">Subscribe</button>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Rate This Shit</h2>
+            <div class="star-rating">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            <textarea id="feedbackText" placeholder="Tell us what you think, asshole..."></textarea>
+            <button id="submitRating">Submit</button>
+        </div>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <audio id="spaceAudio" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+        <button id="muteToggle">Mute</button>
+    </div>
+
+    <!-- Social Share -->
+    <div class="social-share">
+        <button id="shareTwitter" class="share-btn">Share on X</button>
+        <button id="mapBtn" class="share-btn">Galactic Map</button>
+        <button id="newsletterBtn" class="share-btn">Deal Warp</button>
+    </div>
+
+    <footer>
+        <p>© 2025 Galactic Deal Scraper | <a href="https://github.com/yourusername/galactic-deal-scraper" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

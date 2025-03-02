@@ -1,0 +1,14 @@
+[
+    {"id": 1, "name": "Laptop X", "category": "Laptops", "originalPrice": 1000, "discountedPrice": 700, "expiration": "2025-03-05", "link": "https://example.com", "dateAdded": "2025-03-01"},
+    {"id": 2, "name": "GPU 3080", "category": "GPUs", "originalPrice": 800, "discountedPrice": 600, "expiration": "2025-03-03", "link": "https://example.com", "dateAdded": "2025-03-02"},
+    {"id": 3, "name": "Phone Z", "category": "Phones", "originalPrice": 500, "discountedPrice": 400, "expiration": "2025-03-04", "link": "https://example.com", "dateAdded": "2025-02-28"},
+    {"id": 4, "name": "1TB SSD", "category": "Storage", "originalPrice": 150, "discountedPrice": 70, "expiration": "2025-03-10", "link": "https://example.com", "dateAdded": "2025-03-01"},
+    {"id": 5, "name": "Mechanical Keyboard", "category": "Peripherals", "originalPrice": 200, "discountedPrice": 120, "expiration": "2025-03-15", "link": "https://example.com", "dateAdded": "2025-02-25"},
+    {"id": 6, "name": "Quantum Processor", "category": "Alien Tech", "originalPrice": 5000, "discountedPrice": 2000, "expiration": "2025-03-20", "link": "https://example.com", "dateAdded": "2025-03-01"},
+    {"id": 7, "name": "Gaming Monitor 32\"", "category": "Peripherals", "originalPrice": 400, "discountedPrice": 250, "expiration": "2025-03-12", "link": "https://example.com", "dateAdded": "2025-03-03"},
+    {"id": 8, "name": "Wireless Earbuds", "category": "Phones", "originalPrice": 150, "discountedPrice": 80, "expiration": "2025-03-08", "link": "https://example.com", "dateAdded": "2025-03-02"},
+    {"id": 9, "name": "RTX 4070", "category": "GPUs", "originalPrice": 600, "discountedPrice": 450, "expiration": "2025-03-07", "link": "https://example.com", "dateAdded": "2025-03-01"},
+    {"id": 10, "name": "MacBook Pro", "category": "Laptops", "originalPrice": 1800, "discountedPrice": 1500, "expiration": "2025-03-09", "link": "https://example.com", "dateAdded": "2025-02-27"},
+    {"id": 11, "name": "Teleportation Pad", "category": "Alien Tech", "originalPrice": 10000, "discountedPrice": 4000, "expiration": "2025-03-25", "link": "https://example.com", "dateAdded": "2025-03-02"},
+    {"id": 12, "name": "4TB NVMe SSD", "category": "Storage", "originalPrice": 400, "discountedPrice": 250, "expiration": "2025-03-15", "link": "https://example.com", "dateAdded": "2025-03-03"}
+]
