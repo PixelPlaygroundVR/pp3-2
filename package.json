@@ -1,0 +1,36 @@
+{
+  "name": "galactic-deal-scraper",
+  "version": "1.0.0",
+  "description": "The Fucking Future of Deal Hunting - A tech deal-scraping juggernaut with a galactic vibe",
+  "main": "serve.js",
+  "scripts": {
+    "start": "node serve.js",
+    "scrape": "node .github/workflows/scrape.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "deals",
+    "tech",
+    "scraper",
+    "galactic",
+    "donation"
+  ],
+  "author": "Galactic Deal Scraper Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "rss-parser": "^3.13.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/galactic-deal-scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/galactic-deal-scraper/issues"
+  },
+  "homepage": "https://yourusername.github.io/galactic-deal-scraper"
+} 
