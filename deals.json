@@ -1,0 +1,5 @@
+[
+    {"id": 1, "name": "Laptop X", "category": "Laptops", "originalPrice": 1000, "discountedPrice": 700, "expiration": "2025-03-05", "link": "https://example.com"},
+    {"id": 2, "name": "GPU 3080", "category": "GPUs", "originalPrice": 800, "discountedPrice": 600, "expiration": "2025-03-03", "link": "https://example.com"},
+    {"id": 3, "name": "Phone Z", "category": "Phones", "originalPrice": 500, "discountedPrice": 400, "expiration": "2025-03-04", "link": "https://example.com"}
+]

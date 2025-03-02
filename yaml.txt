@@ -1,0 +1,33 @@
+name: Update Deals
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch:
+jobs:
+  update-deals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install Dependencies
+        run: npm install rss-parser
+      - name: Scrape Deals
+        run: |
+          echo "const Parser = require('rss-parser');" > scrape.js
+          echo "const parser = new Parser();" >> scrape.js
+          echo "(async () => {" >> scrape.js
+          echo "  const feed = await parser.parseURL('https://slickdeals.net/newsearch.php?mode=frontpage&searcharea=deals&searchin=first&rss=1');" >> scrape.js
+          echo "  const deals = feed.items.map(item => ({ id: Date.now() + Math.random(), name: item.title, category: 'Tech', originalPrice: 1000, discountedPrice: 700, expiration: '2025-03-05', link: item.link }));" >> scrape.js
+          echo "  require('fs').writeFileSync('deals.json', JSON.stringify(deals.slice(0, 10), null, 2));" >> scrape.js
+          echo "})();" >> scrape.js
+          node scrape.js
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add deals.json
+          git commit -m "Update deals.json with latest scraped data" || echo "No changes to commit"
+          git push

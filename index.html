@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Deal Scraper - The Fucking Future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="starry-bg"></div>
+    <header>
+        <h1>Galactic Deal Scraper</h1>
+        <p>Snag Tech Deals from the Cosmos!</p>
+    </header>
+
+    <main>
+        <!-- Search and Filters -->
+        <section class="controls">
+            <input type="text" id="searchBar" placeholder="Search deals (e.g., SSD)">
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="Laptops">Laptops</option>
+                <option value="Phones">Phones</option>
+                <option value="GPUs">GPUs</option>
+            </select>
+            <select id="sortFilter">
+                <option value="price">Price: Low to High</option>
+                <option value="discount">Discount: High to Low</option>
+                <option value="expiration">Expiring Soon</option>
+            </select>
+            <button id="cosmicScan">Cosmic Scan</button>
+        </section>
+
+        <!-- Deal Catalog -->
+        <section id="dealCatalog" class="deal-grid" aria-live="polite"></section>
+
+        <!-- Checkout and Donate -->
+        <section id="checkout" class="hidden">
+            <h2>Checkout, You Cheap Bastard!</h2>
+            <p id="savingsText">You've saved $0 so far.</p>
+            <div class="donate-section">
+                <p>Toss us some creds to keep this galaxy spinning!</p>
+                <button class="donate-btn" data-amount="1">$1</button>
+                <button class="donate-btn" data-amount="5">$5</button>
+                <input type="number" id="customAmount" min="1" placeholder="Custom $">
+                <button id="roundUp">Round Up My Savings</button>
+            </div>
+            <p>Donate via: <a href="#" id="stripeLink">Stripe</a> | <a href="#" id="paypalLink">PayPal</a> | <a href="#" id="cryptoLink">Crypto</a></p>
+        </section>
+
+        <!-- Zorblax Chatbot Placeholder -->
+        <aside id="zorblaxChat" class="hidden">
+            <h3>Zorblax, Your Deal Overlord</h3>
+            <input type="text" id="chatInput" placeholder="Ask me shit...">
+            <div id="chatOutput"></div>
+        </aside>
+    </main>
+
+    <audio id="spaceAudio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    <button id="muteToggle">Mute</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
